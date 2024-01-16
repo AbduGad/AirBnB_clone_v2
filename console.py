@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import re
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -48,7 +49,7 @@ class HBNBCommand(cmd.Cmd):
         if not ('.' in line and '(' in line and ')' in line):
             return line
 
-        try:  # parse line left to right
+        """try:  # parse line left to right
             pline = line[:]  # parsed line
 
             # isolate <class name>
@@ -86,6 +87,7 @@ class HBNBCommand(cmd.Cmd):
             pass
         finally:
             return line
+            """
 
     def postcmd(self, stop, line):
         """Prints if isatty is false"""
@@ -116,13 +118,24 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
+        print(args)
+        Sargs = args.split()
+        print(Sargs)
+        print(Sargs[0])
         if not args:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif Sargs[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
+        DiSargs = {}
+        print(Sargs[1].split('=')[1].split('"'))
+        for i in range(1, len(Sargs)):
+            pair = Sargs[i]
+            key, value = pair.split('=')
+            DiSargs[key] = value.split('"')[1]
+        class_atributes = DiSargs if len(args) > 1 else {}
+        new_instance = HBNBCommand.classes[Sargs[0]](**class_atributes)
         storage.save()
         print(new_instance.id)
         storage.save()
@@ -273,7 +286,7 @@ class HBNBCommand(cmd.Cmd):
                 args.append(v)
         else:  # isolate args
             args = args[2]
-            if args and args[0] is '\"':  # check for quoted arg
+            if args and args[0] == '\"':  # check for quoted arg
                 second_quote = args.find('\"', 1)
                 att_name = args[1:second_quote]
                 args = args[second_quote + 1:]
@@ -281,7 +294,7 @@ class HBNBCommand(cmd.Cmd):
             args = args.partition(' ')
 
             # if att_name was not quoted arg
-            if not att_name and args[0] is not ' ':
+            if not att_name and args[0] != ' ':
                 att_name = args[0]
             # check for quoted val arg
             if args[2] and args[2][0] is '\"':
