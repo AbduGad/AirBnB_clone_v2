@@ -116,12 +116,9 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, args):
+    def do_create(self, args:str):
         """ Create an object of any class"""
-        print(args)
         Sargs = args.split()
-        print(Sargs)
-        print(Sargs[0])
         if not args:
             print("** class name missing **")
             return
@@ -134,6 +131,7 @@ class HBNBCommand(cmd.Cmd):
             pair = Sargs[i]
             key, value = pair.split('=')
             DiSargs[key] = value.split('"')[1]
+            
         class_atributes = DiSargs if len(args) > 1 else {}
         new_instance = HBNBCommand.classes[Sargs[0]](**class_atributes)
         storage.save()
@@ -297,7 +295,9 @@ class HBNBCommand(cmd.Cmd):
             if not att_name and args[0] != ' ':
                 att_name = args[0]
             # check for quoted val arg
-            if args[2] and args[2][0] is '\"':
+            #if args[2] and args[2][0] is '\"':
+            if args[2] and args[2][0] == '\"':
+            
                 att_val = args[2][1:args[2].find('\"', 1)]
 
             # if att_val was not quoted arg
