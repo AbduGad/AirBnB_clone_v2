@@ -135,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
             if '\"' in value:
                 #print(value)
                 #print(len(value))
-                DictArgs[key] = value.split('"')[1]
+                DictArgs[key] = ' '.join(value.split('"')[1].split('_'))
             else:
                 DictArgs[key] = value
         class_atributes = DictArgs if len(args) > 1 else {}

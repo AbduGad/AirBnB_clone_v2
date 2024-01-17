@@ -55,10 +55,8 @@ class FileStorage:
                 # print(self.all(), '1111')
                 for key, val in temp.items():
                     self.all()[key] = classes[val["__class__"]](**val)
-                    print(self.all()[key])
-                # for key, value in self.all().items():
-                #     for key2, value2 in value.items():
-                #         print("-----------", value2, type(value2))
+                    #for key2, value2 in val.items():
+                        #print("-----------", value2, type(value2))
 
         except FileNotFoundError:
             pass
