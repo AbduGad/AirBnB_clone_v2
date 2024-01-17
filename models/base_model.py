@@ -26,7 +26,7 @@ class BaseModel:
                                                      '%Y-%m-%dT%H:%M:%S.%f')
                 else:
                     setattr(self, key, value)
-            print(type(self.created_at))
+            print(type(self.created_at), '1111111111')
             del kwargs['__class__']
             self.__dict__.update(kwargs)
 
@@ -47,6 +47,8 @@ class BaseModel:
         dictionary.update(self.__dict__)
         dictionary.update({'__class__':
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
+        print(type(self.created_at), '************')
+        print(type(self))
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         return dictionary
