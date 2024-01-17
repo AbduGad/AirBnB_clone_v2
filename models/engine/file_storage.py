@@ -12,7 +12,8 @@ from models.review import Review
 
 class FileStorage:
     """This class manages storage of hbnb models in JSON format"""
-    __file_path = 'file.json'
+
+    __file_path = "file.json"
     __objects = {}
 
     def all(self):
@@ -21,7 +22,7 @@ class FileStorage:
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
-        self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
+        self.all().update({obj.to_dict()["__class__"] + "." + obj.id: obj})
 
     def save(self):
         """Saves storage dictionary to file"""
@@ -29,25 +30,35 @@ class FileStorage:
         temp.update(FileStorage.__objects)
         for key, val in temp.items():
             if not isinstance(val, dict):
-                #print('///////',type(val.created_at))
+                # print('///////',type(val.created_at))
                 temp[key] = val.to_dict()
-        with open(FileStorage.__file_path, 'w') as f:
-            json.dump(temp, f)
+        with open(FileStorage.__file_path, "w") as f:
+            json_string = json.dumps(temp)
+            f.write(json_string)
 
     def reload(self):
         """Loads storage dictionary from file"""
         classes = {
-                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
-                    'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review
-                  }
+            "BaseModel": BaseModel,
+            "User": User,
+            "Place": Place,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Review": Review,
+        }
         try:
             temp = {}
-            with open(FileStorage.__file_path, 'r') as f:
-                temp = json.load(f)
-                #print(self.all(), '1111')
+            with open(FileStorage.__file_path, "r") as f:
+                temp = json.loads(f.read())
+
+                # print(self.all(), '1111')
                 for key, val in temp.items():
-                        self.all()[key] = classes[val['__class__']](**val)
-                #print(self.all(), '2222')
+                    self.all()[key] = classes[val["__class__"]](**val)
+                    print(self.all()[key])
+                # for key, value in self.all().items():
+                #     for key2, value2 in value.items():
+                #         print("-----------", value2, type(value2))
+
         except FileNotFoundError:
             pass
