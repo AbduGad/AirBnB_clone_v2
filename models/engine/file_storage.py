@@ -29,7 +29,7 @@ class FileStorage:
         temp.update(FileStorage.__objects)
         for key, val in temp.items():
             if not isinstance(val, dict):
-                print('///////',type(val.created_at))
+                #print('///////',type(val.created_at))
                 temp[key] = val.to_dict()
         with open(FileStorage.__file_path, 'w') as f:
             json.dump(temp, f)
@@ -45,9 +45,9 @@ class FileStorage:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
-                print(self.all(), '1111')
+                #print(self.all(), '1111')
                 for key, val in temp.items():
                         self.all()[key] = classes[val['__class__']](**val)
-                print(self.all(), '2222')
+                #print(self.all(), '2222')
         except FileNotFoundError:
             pass

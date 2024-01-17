@@ -10,13 +10,13 @@ class BaseModel:
     def __init__(self, *args, **kwargs):# "Create State name = California"
         """Instatntiates a new model"""
         if not kwargs or 'id' not in kwargs:
-            print('if')
+            #print('if')
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
             models.storage.new(self)
         else:
-            print('else')
+            #print('else')
             for key, value in kwargs.items():
                 if key == '__class__':
                     continue
@@ -28,7 +28,7 @@ class BaseModel:
                                                      '%Y-%m-%dT%H:%M:%S.%f')
                 else:
                     setattr(self, key, value)
-            print(type(self.created_at), '1111111111')
+            #print(type(self.created_at), '1111111111')
             del kwargs['__class__']
             self.__dict__.update(kwargs)
 
@@ -44,13 +44,13 @@ class BaseModel:
 
     def to_dict(self):
         """Convert instance into dict format"""
-        print(type(self.created_at), '################')
+        #print(type(self.created_at), '################')
         dictionary = {}
         dictionary.update(self.__dict__)
         dictionary.update({'__class__':
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
-        print(type(self.created_at), '************')
-        print(type(self))
+        #print(type(self.created_at), '************')
+        #print(type(self))
         if isinstance(self.created_at, str):
             self.created_at = datetime.strptime(self.created_at,
                                                      '%Y-%m-%dT%H:%M:%S.%f')
