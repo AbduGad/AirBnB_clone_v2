@@ -136,6 +136,8 @@ class HBNBCommand(cmd.Cmd):
                 #print(value)
                 #print(len(value))
                 DictArgs[key] = value.split('"')[1]
+            else:
+                DictArgs[key] = value
         class_atributes = DictArgs if len(args) > 1 else {}
         new_instance = HBNBCommand.classes[Sargs[0]](**class_atributes)
         models.storage.save()
