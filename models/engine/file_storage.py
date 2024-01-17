@@ -33,8 +33,7 @@ class FileStorage:
                 # print('///////',type(val.created_at))
                 temp[key] = val.to_dict()
         with open(FileStorage.__file_path, "w") as f:
-            json_string = json.dumps(temp)
-            f.write(json_string)
+            json.dump(temp, f)
 
     def reload(self):
         """Loads storage dictionary from file"""
@@ -50,15 +49,14 @@ class FileStorage:
         try:
             temp = {}
             with open(FileStorage.__file_path, "r") as f:
-                temp = json.loads(f.read())
+                temp = json.load(f)
 
                 # print(self.all(), '1111')
                 for key, val in temp.items():
                     self.all()[key] = classes[val["__class__"]](**val)
                     print(self.all()[key])
-                # for key, value in self.all().items():
-                #     for key2, value2 in value.items():
-                #         print("-----------", value2, type(value2))
+                    for key2, value2 in val.items():
+                        print("-----------", value2, type(value2))
 
         except FileNotFoundError:
             pass
