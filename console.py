@@ -49,7 +49,7 @@ class HBNBCommand(cmd.Cmd):
         if not ('.' in line and '(' in line and ')' in line):
             return line
 
-        """try:  # parse line left to right
+        try:  # parse line left to right
             pline = line[:]  # parsed line
 
             # isolate <class name>
@@ -75,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] is '{' and pline[-1] is'}'\
+                    if pline[0] == '{' and pline[-1] =='}'\
                             and type(eval(pline)) is dict:
                         _args = pline
                     else:
@@ -87,7 +87,6 @@ class HBNBCommand(cmd.Cmd):
             pass
         finally:
             return line
-            """
 
     def postcmd(self, stop, line):
         """Prints if isatty is false"""
@@ -118,7 +117,10 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args:str):
         """ Create an object of any class"""
+        """print(args)"""
         Sargs = args.split()
+        """print(Sargs)
+        print(Sargs[0])"""
         if not args:
             print("** class name missing **")
             return
@@ -126,7 +128,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         DiSargs = {}
-        print(Sargs[1].split('=')[1].split('"'))
+        """print(Sargs[1].split('=')[1].split('"'))"""
         for i in range(1, len(Sargs)):
             pair = Sargs[i]
             key, value = pair.split('=')
@@ -295,9 +297,7 @@ class HBNBCommand(cmd.Cmd):
             if not att_name and args[0] != ' ':
                 att_name = args[0]
             # check for quoted val arg
-            #if args[2] and args[2][0] is '\"':
             if args[2] and args[2][0] == '\"':
-            
                 att_val = args[2][1:args[2].find('\"', 1)]
 
             # if att_val was not quoted arg
