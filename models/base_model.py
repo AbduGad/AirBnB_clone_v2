@@ -18,11 +18,15 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key == '__class__':
                     continue
-                if key == 'updated_at' or key == 'created_at':
-                    setattr(self, key, datetime.strptime(value,
-                                                     '%Y-%m-%dT%H:%M:%S.%f'))
+                if key == 'updated_at':
+                    self.updated_at = datetime.strptime(value,
+                                                     '%Y-%m-%dT%H:%M:%S.%f')
+                elif key == 'created_at':
+                    self.created_at = datetime.strptime(value,
+                                                     '%Y-%m-%dT%H:%M:%S.%f')
                 else:
                     setattr(self, key, value)
+            print(type(self.created_at))
             del kwargs['__class__']
             self.__dict__.update(kwargs)
 
