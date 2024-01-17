@@ -127,13 +127,16 @@ class HBNBCommand(cmd.Cmd):
         elif Sargs[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        DiSargs = {}
+        DictArgs = {}
         """print(Sargs[1].split('=')[1].split('"'))"""
         for i in range(1, len(Sargs)):
             pair = Sargs[i]
             key, value = pair.split('=')
-            DiSargs[key] = value.split('"')[1]
-        class_atributes = DiSargs if len(args) > 1 else {}
+            if '\"' in value:
+                #print(value)
+                #print(len(value))
+                DictArgs[key] = value.split('"')[1]
+        class_atributes = DictArgs if len(args) > 1 else {}
         new_instance = HBNBCommand.classes[Sargs[0]](**class_atributes)
         models.storage.save()
         print(new_instance.id)
