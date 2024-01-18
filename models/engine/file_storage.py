@@ -26,13 +26,14 @@ class FileStorage:
 
     def save(self):
         """Saves storage dictionary to file"""
-        #print('save')
+
+        # print('save')
         temp = {}
-        #print(type(FileStorage.__objects['State.0e453947-2879-496f-ad2d-78a61b53e6a0'].created_at))
         temp.update(self.__objects)
+
         for key, val in temp.items():
-            #print(type(FileStorage.__objects[key].created_at))
-            #print(type(val.created_at))
+            # print(type(FileStorage.__objects[key].created_at))
+            # print(type(val.created_at))
             if not isinstance(val, dict):
                 # print('///////',type(val.created_at))
                 temp[key] = val.to_dict()
@@ -58,8 +59,16 @@ class FileStorage:
                 # print(self.all(), '1111')
                 for key, val in temp.items():
                     self.all()[key] = classes[val["__class__"]](**val)
-                    # for key2, value2 in val.items():
-                    # print("-----------", value2, type(value2))
+            """
+                print(
+                    "storgeeeeeeee",
+                    type(
+                        self.__objects[
+                            "State.a64667fa-782b-4f47-8853-f47be4c961ec"
+                        ].created_at,
+                    ),
+                )
+                """
 
         except FileNotFoundError:
             pass
