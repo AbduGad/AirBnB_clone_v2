@@ -16,7 +16,9 @@ class BaseModel:
             self.updated_at = datetime.now()
             models.storage.new(self)
             for key, value in kwargs.items():
-                setattr(self, key, value)
+                if key != 'created_at' and key != 'updated_at':
+                    setattr(self, key, value)
+            #print('if')
         else:
             #print('else')
             for key, value in kwargs.items():
@@ -30,7 +32,7 @@ class BaseModel:
                                                      '%Y-%m-%dT%H:%M:%S.%f')
                 else:
                     setattr(self, key, value)
-            #print(type(self.created_at), '1111111111')
+            print(type(self.created_at), '1111111111')
             del kwargs['__class__']
             self.__dict__.update(kwargs)
 

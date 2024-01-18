@@ -26,9 +26,13 @@ class FileStorage:
 
     def save(self):
         """Saves storage dictionary to file"""
+        #print('save')
         temp = {}
-        temp.update(FileStorage.__objects)
+        #print(type(FileStorage.__objects['State.0e453947-2879-496f-ad2d-78a61b53e6a0'].created_at))
+        temp.update(self.__objects)
         for key, val in temp.items():
+            #print(type(FileStorage.__objects[key].created_at))
+            #print(type(val.created_at))
             if not isinstance(val, dict):
                 # print('///////',type(val.created_at))
                 temp[key] = val.to_dict()
